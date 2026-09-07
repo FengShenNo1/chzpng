@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#138a56" />
+    <title>翠压 - 图片压缩工具</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="翠压首页"><span class="brand-mark"><i></i><i></i><i></i></span><span>翠压</span></a>
+      <span class="topbar-note">图片压缩工作台</span>
+      <div class="privacy-badge"><span class="dot"></span>安全处理</div>
+    </header>
+
+    <main id="top">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">IMAGE COMPRESSION</p>
+          <h1>让每一张图片<br /><em>恰到好处</em></h1>
+          <p class="intro-copy">选择压缩级别，批量优化图片体积。清晰对比处理前后效果，一键下载。</p>
+        </div>
+        <div class="stat-strip" aria-label="工具特性">
+          <div><strong>JPG · PNG · WebP</strong><span>常见格式支持</span></div>
+          <div><strong>20 张</strong><span>单次批量处理</span></div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="图片压缩工作区">
+        <div class="settings-panel">
+          <div class="section-heading"><span>01</span><h2>压缩设置</h2></div>
+          <div class="quality-presets" role="radiogroup" aria-label="压缩质量预设">
+            <label><input type="radio" name="preset" value="88" /><span><b>高</b><small>清晰优先</small></span></label>
+            <label><input type="radio" name="preset" value="72" checked /><span><b>中</b><small>推荐平衡</small></span></label>
+            <label><input type="radio" name="preset" value="48" /><span><b>低</b><small>体积优先</small></span></label>
+          </div>
+          <div class="range-row">
+            <label for="quality">自定义质量</label>
+            <output id="quality-value">72%</output>
+          </div>
+          <input id="quality" type="range" min="1" max="100" value="72" />
+          <label class="select-label" for="format">输出格式</label>
+          <select id="format">
+            <option value="webp" selected>WebP（推荐）</option>
+            <option value="jpeg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="original">保持原格式</option>
+          </select>
+        </div>
+
+        <div class="upload-panel">
+          <div class="section-heading"><span>02</span><h2>添加图片</h2></div>
+          <label id="dropzone" class="dropzone" for="file-input">
+            <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/tiff,image/avif" multiple />
+            <span class="upload-icon" aria-hidden="true">↑</span>
+            <strong>拖放图片到这里</strong>
+            <span>或点击选择文件</span>
+            <small>支持 JPG、PNG、WebP 等格式，单张最大 25MB</small>
+          </label>
+          <div id="queued-files" class="queued-files" hidden></div>
+          <button id="compress-btn" class="primary-button" disabled><span>开始压缩</span><span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section id="results" class="results" hidden>
+        <div class="results-header">
+          <div><p class="eyebrow">COMPRESSION RESULT</p><h2>处理结果</h2></div>
+          <button id="download-all" class="download-all"><span aria-hidden="true">↓</span>下载全部 ZIP</button>
+        </div>
+        <div id="summary" class="summary"></div>
+        <div id="result-grid" class="result-grid"></div>
+      </section>
+    </main>
+
+    <template id="queued-template"><div class="queued-file"><span class="queued-thumb"></span><span class="queued-name"></span><button type="button" aria-label="移除图片">×</button></div></template>
+    <template id="result-template">
+      <article class="result-card">
+        <div class="result-title"><span class="file-bullet"></span><strong class="result-name"></strong><button class="single-download" title="下载此图片" aria-label="下载此图片">↓</button></div>
+        <div class="comparison">
+          <div><div class="image-preview before"><img class="original-image" alt="原始图片预览" /></div><p>原始图片</p><strong class="original-size"></strong><small class="original-dimensions"></small></div>
+          <div class="compare-arrow" aria-hidden="true">→</div>
+          <div><div class="image-preview after"><img class="compressed-image" alt="压缩后图片预览" /></div><p>压缩后</p><strong class="compressed-size"></strong><small class="compressed-dimensions"></small></div>
+        </div>
+        <div class="saving">节省 <strong class="saving-rate"></strong></div>
+      </article>
+    </template>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
